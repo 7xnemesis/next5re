@@ -42,10 +42,16 @@
       background: transparent;
       color: white;
       cursor: pointer;
+      margin-top: 15px;
     }
 
     .btn:hover {
       background: #7c3aed;
+    }
+
+    a {
+      color: white;
+      text-decoration: none;
     }
   </style>
 </head>
@@ -59,19 +65,19 @@
 <div class="content">
   <h1>NEXT5RE</h1>
   <p>enter the void 🌑</p>
-  <button class="btn" onclick="toggleMusic()">Play Music</button>
+
+  <!-- ENTER BUTTON -->
+  <a href="about.html">
+    <button class="btn">Enter</button>
+  </a>
+
+  <!-- INSTAGRAM -->
+  <p style="margin-top:15px;">
+    <a href="https://instagram.com/7xnemesis" target="_blank">
+      @7xnemesis
+    </a>
+  </p>
 </div>
-
-<audio id="music" src="music.mp3"></audio>
-
-<script>
-  let music = document.getElementById("music");
-
-  function toggleMusic() {
-    if (music.paused) music.play();
-    else music.pause();
-  }
-</script>
 
 </body>
 </html>
