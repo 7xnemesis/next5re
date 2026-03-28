@@ -16,7 +16,6 @@
       overflow: hidden;
     }
 
-    /* VIDEO */
     video {
       position: fixed;
       width: 100%;
@@ -29,7 +28,7 @@
       position: fixed;
       width: 100%;
       height: 100%;
-      background: rgba(0,0,0,0.7);
+      background: rgba(0,0,0,0.6);
       z-index: -2;
     }
 
@@ -37,9 +36,10 @@
     .nav {
       position: fixed;
       top: 20px;
-      right: 40px;
+      right: 20px;
       display: flex;
-      gap: 25px;
+      gap: 20px;
+      font-size: 14px;
     }
 
     .nav a {
@@ -62,8 +62,8 @@
 
     h1 {
       font-family: 'Orbitron';
-      font-size: 3rem;
-      letter-spacing: 10px;
+      font-size: 2.5rem;
+      letter-spacing: 8px;
     }
 
     .btn {
@@ -74,7 +74,6 @@
       color: white;
       cursor: pointer;
       border-radius: 20px;
-      transition: 0.3s;
     }
 
     .btn:hover {
@@ -107,7 +106,7 @@
     .close {
       position: absolute;
       top: 20px;
-      left: 30px;
+      left: 20px;
       cursor: pointer;
       font-size: 20px;
     }
@@ -116,23 +115,14 @@
     .symbol {
       position: absolute;
       color: white;
-      pointer-events: none;
       opacity: 0.15;
+      pointer-events: none;
+      animation: floatMove 8s infinite alternate ease-in-out;
     }
 
-    /* TRIANGLES */
-    .triangle {
-      position: absolute;
-      width: 0;
-      height: 0;
-      border-style: solid;
-      opacity: 0.08;
-      animation: floatUp linear infinite;
-    }
-
-    @keyframes floatUp {
-      0% { bottom: -50px; }
-      100% { bottom: 110%; }
+    @keyframes floatMove {
+      from { transform: translate(0,0); }
+      to { transform: translate(20px, -25px); }
     }
 
   </style>
@@ -164,13 +154,13 @@
 
 <script>
 
-// ================= PANEL =================
+// PANEL
 function openPanel(type) {
   let content = "";
 
   if(type === "about") {
     content = `<h2>About</h2>
-    <p>I am Nitin, focused on building modern and aesthetic digital experiences.</p>`;
+    <p>I am Nitin, creating modern digital experiences with a focus on design and creativity.</p>`;
   }
 
   if(type === "projects") {
@@ -192,69 +182,59 @@ function closePanel() {
 }
 
 
-// ================= TRIANGLES =================
-for(let i=0;i<20;i++){
-  let t=document.createElement("div");
-  t.className="triangle";
-  t.style.left=Math.random()*100+"%";
-  t.style.borderWidth=`0 ${10+Math.random()*25}px ${20+Math.random()*50}px ${10+Math.random()*25}px`;
-  t.style.borderColor="transparent transparent white transparent";
-  t.style.animationDuration=(8+Math.random()*12)+"s";
-  document.body.appendChild(t);
-}
-
-
-// ================= SYMBOLS =================
-const symbols=["<>","//","{}","##","01","++","==","$","@@","**"];
+// SYMBOLS (FIXED FOR MOBILE)
+const symbols=["<>","//","{}","##","01","++","==","$"];
 let symbolElements=[];
 
-for(let i=0;i<30;i++){
+for(let i=0;i<25;i++){
   let s=document.createElement("div");
   s.className="symbol";
   s.innerText=symbols[Math.floor(Math.random()*symbols.length)];
 
   s.style.left=Math.random()*100+"%";
-  s.style.bottom="-20px";
+  s.style.top=Math.random()*100+"%";
   s.style.fontSize=(12 + Math.random()*10)+"px";
-  s.style.animationDuration=(6+Math.random()*10)+"s";
 
   document.body.appendChild(s);
   symbolElements.push(s);
 }
 
 
-// ================= ENTER ANIMATION =================
+// ENTER TRANSITION (CLEAN + SMOOTH)
 function enterSite() {
 
-  // pull to center
+  // stop floating
+  symbolElements.forEach(sym => sym.style.animation="none");
+
+  // unite
   symbolElements.forEach(sym => {
     sym.style.transition="0.6s";
     sym.style.left="50%";
-    sym.style.bottom="50%";
-    sym.style.transform="translate(-50%,50%) scale(1.5)";
+    sym.style.top="50%";
+    sym.style.transform="translate(-50%, -50%) scale(1.5)";
     sym.style.opacity="1";
   });
 
   // explode
   setTimeout(()=>{
     symbolElements.forEach(sym=>{
-      let x=(Math.random()-0.5)*800;
-      let y=(Math.random()-0.5)*800;
-      sym.style.transform=`translate(${x}px,${y}px) scale(0.3)`;
+      let x=(Math.random()-0.5)*500;
+      let y=(Math.random()-0.5)*500;
+      sym.style.transform=`translate(${x}px,${y}px) scale(0.2)`;
       sym.style.opacity="0";
     });
   },600);
 
   // fade
   setTimeout(()=>{
-    document.body.style.transition="0.6s";
+    document.body.style.transition="0.5s";
     document.body.style.opacity="0";
   },1100);
 
   // redirect
   setTimeout(()=>{
     window.location.href="about.html";
-  },1600);
+  },1500);
 }
 
 </script>
