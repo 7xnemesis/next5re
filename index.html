@@ -2,7 +2,11 @@
 <html>
 <head>
   <title>next5re</title>
+
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
   <link href="https://fonts.googleapis.com/css2?family=Orbitron&family=Poppins&display=swap" rel="stylesheet">
+
   <style>
     body {
       margin: 0;
@@ -10,6 +14,14 @@
       color: white;
       font-family: 'Poppins', sans-serif;
       overflow: hidden;
+
+      /* entry animation */
+      opacity: 0;
+      animation: fadeIn 1s forwards;
+    }
+
+    @keyframes fadeIn {
+      to { opacity: 1; }
     }
 
     video {
@@ -31,22 +43,28 @@
 
     h1 {
       font-family: 'Orbitron', sans-serif;
-      font-size: 60px;
+      font-size: 3rem;
       color: #7c3aed;
       text-shadow: 0 0 20px #7c3aed;
     }
 
+    p {
+      font-size: 1.2rem;
+    }
+
     .btn {
-      padding: 10px 25px;
+      padding: 12px 30px;
       border: 1px solid #7c3aed;
       background: transparent;
       color: white;
       cursor: pointer;
       margin-top: 15px;
+      font-size: 1rem;
     }
 
     .btn:hover {
       background: #7c3aed;
+      box-shadow: 0 0 15px #7c3aed;
     }
 
     a {
@@ -66,18 +84,26 @@
   <h1>NEXT5RE</h1>
   <p>enter the void 🌑</p>
 
-  <!-- ENTER BUTTON -->
-  <a href="about.html">
-    <button class="btn">Enter</button>
-  </a>
+  <button class="btn" onclick="goNext()">Enter</button>
 
-  <!-- INSTAGRAM -->
   <p style="margin-top:15px;">
     <a href="https://instagram.com/7xnemesis" target="_blank">
       @7xnemesis
     </a>
   </p>
 </div>
+
+<script>
+function goNext() {
+  document.body.style.transition = "0.5s";
+  document.body.style.opacity = "0";
+  document.body.style.transform = "scale(1.1)";
+
+  setTimeout(() => {
+    window.location.href = "about.html";
+  }, 500);
+}
+</script>
 
 </body>
 </html>
