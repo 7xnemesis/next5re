@@ -5,41 +5,82 @@
 
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-  <link href="https://fonts.googleapis.com/css2?family=Orbitron&family=Poppins&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@600&family=Poppins&display=swap" rel="stylesheet">
 
   <style>
     body {
       margin: 0;
-      background: radial-gradient(circle at center, #111, black);
-      color: white;
       font-family: 'Poppins', sans-serif;
-      overflow: hidden;
+      overflow-x: hidden;
+      color: white;
+      background: black;
     }
 
-    /* center layout */
-    .content {
-      position: absolute;
-      top: 50%;
-      left: 50%;
-      transform: translate(-50%, -50%);
+    /* VIDEO BACKGROUND */
+    video {
+      position: fixed;
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      z-index: -2;
+    }
+
+    /* DARK OVERLAY (IMPORTANT FIX) */
+    .overlay {
+      position: fixed;
+      width: 100%;
+      height: 100%;
+      background: rgba(0,0,0,0.6);
+      z-index: -1;
+    }
+
+    /* NAVBAR */
+    .nav {
+      position: fixed;
+      top: 20px;
+      right: 40px;
+      display: flex;
+      gap: 25px;
+      font-size: 14px;
+    }
+
+    .nav a {
+      color: white;
+      text-decoration: none;
+      opacity: 0.7;
+    }
+
+    .nav a:hover {
+      opacity: 1;
+    }
+
+    /* SECTION */
+    .section {
+      height: 100vh;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      flex-direction: column;
       text-align: center;
     }
 
     h1 {
       font-family: 'Orbitron', sans-serif;
-      font-size: 3.5rem;
+      font-size: 3rem;
       letter-spacing: 10px;
-      color: white;
+      text-shadow: 0 0 20px rgba(255,255,255,0.2);
     }
 
     p {
-      opacity: 0.6;
+      opacity: 0.7;
       letter-spacing: 2px;
+      margin-top: 10px;
     }
 
+    /* BUTTON */
     .btn {
-      margin-top: 20px;
-      padding: 12px 30px;
+      margin-top: 25px;
+      padding: 10px 28px;
       border: 1px solid white;
       background: transparent;
       color: white;
@@ -53,29 +94,24 @@
       color: black;
     }
 
-    /* floating circle effect */
-    .orb {
-      position: absolute;
-      top: 50%;
-      left: 50%;
-      width: 200px;
-      height: 200px;
-      background: radial-gradient(circle, #7c3aed, transparent);
-      border-radius: 50%;
-      transform: translate(-50%, -50%);
-      filter: blur(40px);
-      animation: float 6s infinite ease-in-out;
-      z-index: -1;
+    /* 3D EFFECT */
+    .title {
+      transform: perspective(600px) rotateX(10deg);
     }
 
-    @keyframes float {
-      0%,100% { transform: translate(-50%, -50%) scale(1); }
-      50% { transform: translate(-50%, -55%) scale(1.1); }
+    /* SECOND SECTION */
+    .section2 {
+      height: 100vh;
+      background: black;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      flex-direction: column;
     }
 
-    a {
-      color: white;
-      text-decoration: none;
+    h2 {
+      font-family: 'Orbitron';
+      letter-spacing: 5px;
     }
 
   </style>
@@ -83,29 +119,40 @@
 
 <body>
 
-<div class="orb"></div>
+<!-- VIDEO -->
+<video autoplay muted loop>
+  <source src="bg.mp4" type="video/mp4">
+</video>
 
-<div class="content">
-  <h1>NEXT5RE</h1>
-  <p>DESIGNING YOUR WORLD</p>
+<div class="overlay"></div>
 
-  <button class="btn" onclick="goNext()">ENTER</button>
+<!-- NAV -->
+<div class="nav">
+  <a href="#">About</a>
+  <a href="#">Projects</a>
+  <a href="#">Contact</a>
+</div>
 
-  <p style="margin-top:15px;">
-    <a href="https://instagram.com/7xnemesis" target="_blank">
-      @7xnemesis
-    </a>
-  </p>
+<!-- HERO -->
+<div class="section">
+  <h1 class="title">NEXT5RE</h1>
+  <p>ENTER THE VOID</p>
+
+  <button class="btn" onclick="scrollNext()">ENTER</button>
+</div>
+
+<!-- SECOND SECTION -->
+<div class="section2">
+  <h2>ABOUT ME</h2>
+  <p>I am Nitin aka 7xnemesis 🚀</p>
 </div>
 
 <script>
-function goNext() {
-  document.body.style.transition = "0.5s";
-  document.body.style.opacity = "0";
-
-  setTimeout(() => {
-    window.location.href = "about.html";
-  }, 500);
+function scrollNext() {
+  window.scrollTo({
+    top: window.innerHeight,
+    behavior: "smooth"
+  });
 }
 </script>
 
