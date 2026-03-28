@@ -3,6 +3,9 @@
 <head>
   <title>About</title>
 
+  <!-- 📱 IMPORTANT FOR MOBILE -->
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
   <style>
     body {
       margin: 0;
@@ -14,6 +17,14 @@
       justify-content: center;
       align-items: center;
       text-align: center;
+
+      /* ✨ fade in */
+      opacity: 0;
+      animation: fadeIn 1s forwards;
+    }
+
+    @keyframes fadeIn {
+      to { opacity: 1; }
     }
 
     .box {
@@ -21,21 +32,24 @@
       padding: 30px;
       border-radius: 10px;
       backdrop-filter: blur(10px);
+      width: 90%;
+      max-width: 400px;
     }
 
     h1 {
-      font-size: 40px;
+      font-size: 2.5rem;
       margin-bottom: 10px;
     }
 
     p {
+      font-size: 1.2rem;
       opacity: 0.8;
     }
 
     a {
       color: #7c3aed;
       text-decoration: none;
-      font-size: 18px;
+      font-size: 1.2rem;
     }
 
     a:hover {
