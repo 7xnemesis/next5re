@@ -5,14 +5,14 @@
 
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-  <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@600&family=Poppins&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@600&family=Poppins:wght@300;500&display=swap" rel="stylesheet">
 
   <style>
     body {
       margin: 0;
-      font-family: 'Poppins', sans-serif;
       background: black;
       color: white;
+      font-family: 'Poppins', sans-serif;
       overflow: hidden;
     }
 
@@ -28,101 +28,59 @@
       position: fixed;
       width: 100%;
       height: 100%;
-      background: rgba(0,0,0,0.6);
+      background: radial-gradient(circle, rgba(0,0,0,0.4), black);
       z-index: -2;
     }
 
-    /* NAV */
-    .nav {
-      position: fixed;
-      top: 20px;
-      right: 20px;
-      display: flex;
-      gap: 20px;
-      font-size: 14px;
+    /* CENTER CORE */
+    .core {
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      width: 120px;
+      height: 120px;
+      transform: translate(-50%, -50%);
+      border-radius: 50%;
+      background: radial-gradient(circle, #7c3aed, transparent);
+      filter: blur(30px);
+      opacity: 0.6;
     }
 
-    .nav a {
-      cursor: pointer;
-      opacity: 0.7;
-    }
-
-    .nav a:hover {
-      opacity: 1;
-    }
-
-    /* HERO */
-    .section {
-      height: 100vh;
-      display: flex;
-      justify-content: center;
-      align-items: center;
-      flex-direction: column;
+    /* TITLE */
+    .title {
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+      text-align: center;
     }
 
     h1 {
       font-family: 'Orbitron';
+      letter-spacing: 12px;
       font-size: 2.5rem;
-      letter-spacing: 8px;
     }
 
-    .btn {
+    .enter {
       margin-top: 20px;
-      padding: 10px 25px;
-      border: 1px solid white;
-      background: transparent;
-      color: white;
+      font-size: 12px;
+      letter-spacing: 3px;
+      opacity: 0.6;
       cursor: pointer;
-      border-radius: 20px;
     }
 
-    .btn:hover {
-      background: white;
-      color: black;
+    .enter:hover {
+      opacity: 1;
     }
 
-    /* PANEL */
-    .panel {
-      position: fixed;
-      top: 0;
-      right: 0;
-      width: 100%;
-      height: 100%;
-      background: black;
-      transform: scale(0);
-      transform-origin: top right;
-      transition: 0.5s;
-      display: flex;
-      justify-content: center;
-      align-items: center;
-      text-align: center;
-      padding: 20px;
-    }
-
-    .panel.active {
-      transform: scale(1);
-    }
-
-    .close {
-      position: absolute;
-      top: 20px;
-      left: 20px;
-      cursor: pointer;
-      font-size: 20px;
-    }
-
-    /* SYMBOLS */
+    /* SYMBOL */
     .symbol {
       position: absolute;
       color: white;
-      opacity: 0.15;
+      opacity: 0.12;
+      font-size: 14px;
       pointer-events: none;
-      animation: floatMove 8s infinite alternate ease-in-out;
-    }
-
-    @keyframes floatMove {
-      from { transform: translate(0,0); }
-      to { transform: translate(20px, -25px); }
+      transition: 0.5s;
     }
 
   </style>
@@ -136,105 +94,72 @@
 
 <div class="overlay"></div>
 
-<div class="nav">
-  <a onclick="openPanel('about')">About</a>
-  <a onclick="openPanel('projects')">Projects</a>
-  <a onclick="openPanel('contact')">Contact</a>
-</div>
+<div class="core" id="core"></div>
 
-<div class="section">
+<div class="title">
   <h1>NEXT5RE</h1>
-  <button class="btn" onclick="enterSite()">ENTER</button>
-</div>
-
-<div class="panel" id="panel">
-  <div class="close" onclick="closePanel()">✕</div>
-  <div id="panelContent"></div>
+  <div class="enter" onclick="activate()">INITIATE</div>
 </div>
 
 <script>
 
-// PANEL
-function openPanel(type) {
-  let content = "";
+// SYMBOL FIELD (spread properly)
+const symbols = ["<>","//","{}","##","01","++","==","$","@@","**"];
+let elements = [];
 
-  if(type === "about") {
-    content = `<h2>About</h2>
-    <p>I am Nitin, creating modern digital experiences with a focus on design and creativity.</p>`;
-  }
-
-  if(type === "projects") {
-    content = `<h2>Projects</h2>
-    <p>No projects yet… something big coming 🚀</p>`;
-  }
-
-  if(type === "contact") {
-    content = `<h2>Contact</h2>
-    <p>+91 7295968932</p>`;
-  }
-
-  document.getElementById("panelContent").innerHTML = content;
-  document.getElementById("panel").classList.add("active");
-}
-
-function closePanel() {
-  document.getElementById("panel").classList.remove("active");
-}
-
-
-// SYMBOLS (FIXED FOR MOBILE)
-const symbols=["<>","//","{}","##","01","++","==","$"];
-let symbolElements=[];
-
-for(let i=0;i<25;i++){
+for(let i=0;i<40;i++){
   let s=document.createElement("div");
   s.className="symbol";
   s.innerText=symbols[Math.floor(Math.random()*symbols.length)];
 
   s.style.left=Math.random()*100+"%";
   s.style.top=Math.random()*100+"%";
-  s.style.fontSize=(12 + Math.random()*10)+"px";
+  s.style.fontSize=(10 + Math.random()*12)+"px";
 
   document.body.appendChild(s);
-  symbolElements.push(s);
+  elements.push(s);
 }
 
 
-// ENTER TRANSITION (CLEAN + SMOOTH)
-function enterSite() {
+// LEGENDARY TRANSITION
+function activate(){
 
-  // stop floating
-  symbolElements.forEach(sym => sym.style.animation="none");
+  // STEP 1: orbit pull
+  elements.forEach((el,i)=>{
+    let angle = (i / elements.length) * Math.PI * 2;
+    let radius = 80;
 
-  // unite
-  symbolElements.forEach(sym => {
-    sym.style.transition="0.6s";
-    sym.style.left="50%";
-    sym.style.top="50%";
-    sym.style.transform="translate(-50%, -50%) scale(1.5)";
-    sym.style.opacity="1";
+    let x = Math.cos(angle) * radius;
+    let y = Math.sin(angle) * radius;
+
+    el.style.left = "50%";
+    el.style.top = "50%";
+    el.style.transform = `translate(${x}px, ${y}px)`;
+    el.style.opacity = "0.8";
   });
 
-  // explode
+  // STEP 2: collapse into core
   setTimeout(()=>{
-    symbolElements.forEach(sym=>{
-      let x=(Math.random()-0.5)*500;
-      let y=(Math.random()-0.5)*500;
-      sym.style.transform=`translate(${x}px,${y}px) scale(0.2)`;
-      sym.style.opacity="0";
+    elements.forEach(el=>{
+      el.style.transform = "translate(0,0) scale(0.5)";
+      el.style.opacity = "0.3";
     });
+
+    document.getElementById("core").style.transform = "translate(-50%, -50%) scale(2)";
+    document.getElementById("core").style.opacity = "1";
   },600);
 
-  // fade
+  // STEP 3: pulse + blackout
   setTimeout(()=>{
-    document.body.style.transition="0.5s";
+    document.body.style.transition="0.6s";
+    document.body.style.background="black";
     document.body.style.opacity="0";
-  },1100);
+  },1200);
 
-  // redirect
+  // STEP 4: enter next world
   setTimeout(()=>{
     window.location.href="about.html";
-  },1500);
+  },1800);
 }
 
 </script>
