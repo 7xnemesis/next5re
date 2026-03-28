@@ -2,15 +2,12 @@
 <html>
 <head>
   <title>About — next5re</title>
-
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
   <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@600&family=Poppins:wght@300;500&display=swap" rel="stylesheet">
 
   <style>
-    :root{
-      --violet:#7c3aed;
-    }
+    :root{ --violet:#7c3aed; }
 
     body{
       margin:0;
@@ -18,15 +15,27 @@
       color:white;
       font-family:'Poppins',sans-serif;
       overflow:hidden;
-      animation:boot 0.9s ease;
+      animation:boot .9s ease;
     }
-
     @keyframes boot{
       0%{background:#3a0000;}
       100%{background:black;}
     }
 
-    /* ====== LAYOUT ====== */
+    /* BACK BUTTON */
+    .back{
+      position:fixed;
+      top:18px; left:18px;
+      font-size:12px; letter-spacing:2px;
+      opacity:.6; cursor:pointer; z-index:5;
+      border:1px solid rgba(255,255,255,.2);
+      padding:6px 10px; border-radius:14px;
+      backdrop-filter: blur(6px);
+      transition:.25s;
+    }
+    .back:hover{ opacity:1; transform:translateX(-4px); }
+
+    /* LAYOUT */
     .wrap{
       height:100vh;
       display:flex;
@@ -35,154 +44,96 @@
       padding:0 8%;
     }
 
-    /* ====== MENU ====== */
+    /* MENU */
     .menu{
-      display:flex;
-      flex-direction:column;
-      gap:28px;
-      letter-spacing:4px;
-      font-size:18px;
+      display:flex; flex-direction:column; gap:28px;
+      letter-spacing:4px; font-size:18px;
       user-select:none;
     }
-
     .menu div{
-      opacity:.45;
-      cursor:pointer;
-      transition:.25s;
-      position:relative;
+      opacity:.45; cursor:pointer; transition:.25s; position:relative;
     }
-
-    .menu div:hover{
-      opacity:1;
-      transform:translateX(12px);
-    }
-
+    .menu div:hover{ opacity:1; transform:translateX(12px); }
     .menu div::after{
-      content:"";
-      position:absolute;
-      left:-12px;
-      top:50%;
-      width:0;
-      height:1px;
-      background:white;
-      transition:.25s;
+      content:""; position:absolute; left:-12px; top:50%;
+      width:0; height:1px; background:white; transition:.25s;
     }
+    .menu div:hover::after{ width:8px; }
 
-    .menu div:hover::after{
-      width:8px;
-    }
-
-    /* ====== CORE ====== */
+    /* CORE */
     .core{
       position:relative;
-      width:320px;
-      height:320px;
-      border-radius:50%;
+      width:300px; height:300px; border-radius:50%;
       background:radial-gradient(circle, rgba(124,58,237,.9), transparent 60%);
       filter:blur(70px);
       transition:1s;
     }
+    .core.pulse{ transform:scale(1.5); opacity:1; }
 
-    .core.pulse{
-      transform:scale(1.4);
-      opacity:1;
-    }
-
-    /* subtle ambient particles */
-    .dust{
-      position:absolute;
-      inset:0;
-      pointer-events:none;
-    }
-
+    /* PARTICLES */
+    .dust{ position:absolute; inset:0; pointer-events:none; }
     .dust i{
-      position:absolute;
-      width:2px;height:2px;
-      background:white;
-      opacity:.2;
-      animation:drift 10s linear infinite;
+      position:absolute; width:2px; height:2px; background:white;
+      opacity:.18;
     }
 
-    @keyframes drift{
-      from{transform:translateY(0)}
-      to{transform:translateY(-120vh)}
-    }
-
-    /* ====== BACK WARP ====== */
+    /* BACKGROUND WARP */
     .warp{
-      position:fixed;
-      inset:0;
-      backdrop-filter:blur(0px);
-      transition:.5s;
-      pointer-events:none;
+      position:fixed; inset:0; backdrop-filter:blur(0px);
+      transition:.45s; pointer-events:none;
     }
+    .warp.active{ backdrop-filter:blur(7px); }
 
-    .warp.active{
-      backdrop-filter:blur(6px);
-    }
-
-    /* ====== PANEL ====== */
+    /* PANEL */
     .panel{
-      position:fixed;
-      top:50%;
-      left:50%;
+      position:fixed; top:50%; left:50%;
       transform:translate(-50%,-50%) scale(.6);
-      width:82%;
-      max-width:560px;
+      width:82%; max-width:560px;
       background:rgba(0,0,0,.92);
       border-radius:12px;
       padding:34px 28px;
       opacity:0;
       transition:.45s cubic-bezier(.2,.7,.2,1);
       box-shadow:
-        0 0 60px rgba(124,58,237,.15),
+        0 0 60px rgba(124,58,237,.18),
         inset 0 0 20px rgba(124,58,237,.1);
     }
-
     .panel.active{
       transform:translate(-50%,-50%) scale(1);
       opacity:1;
     }
 
     .close{
-      position:absolute;
-      right:18px;
-      top:12px;
-      font-size:18px;
-      cursor:pointer;
-      opacity:.5;
+      position:absolute; right:18px; top:12px;
+      font-size:18px; cursor:pointer; opacity:.5;
     }
-
-    .close:hover{opacity:1}
+    .close:hover{ opacity:1; }
 
     h2{
       font-family:'Orbitron';
       letter-spacing:5px;
       margin:0 0 12px;
     }
-
     p{
-      opacity:.7;
-      line-height:1.7;
-      font-size:14px;
+      opacity:.75; line-height:1.7; font-size:14px;
     }
 
-    /* ====== MOBILE ====== */
+    /* MOBILE */
     @media(max-width:768px){
       .wrap{
         flex-direction:column;
         justify-content:center;
         gap:60px;
       }
-
-      .menu{align-items:center}
-      .core{width:220px;height:220px}
+      .menu{ align-items:center; }
+      .core{ width:220px; height:220px; }
     }
   </style>
 </head>
 
 <body>
 
+<div class="back" onclick="goBack()">← BACK</div>
 <div class="warp" id="warp"></div>
 
 <div class="wrap">
@@ -208,17 +159,81 @@
 </div>
 
 <script>
-/* ===== ambient dust ===== */
+/* ===== PARTICLE FIELD (with gravity) ===== */
 const dust = document.getElementById("dust");
-for(let i=0;i<60;i++){
-  let d=document.createElement("i");
-  d.style.left=Math.random()*100+"%";
-  d.style.top=Math.random()*100+"%";
-  d.style.animationDuration=(6+Math.random()*10)+"s";
-  dust.appendChild(d);
+const particles = [];
+const N = 80;
+
+for(let i=0;i<N;i++){
+  let el = document.createElement("i");
+  let p = {
+    el,
+    x: Math.random()*window.innerWidth,
+    y: Math.random()*window.innerHeight,
+    vx: (Math.random()-.5)*0.4,
+    vy: (Math.random()-.5)*0.4
+  };
+  el.style.left = p.x+"px";
+  el.style.top = p.y+"px";
+  dust.appendChild(el);
+  particles.push(p);
 }
 
-/* ===== content ===== */
+/* gravity center = core position */
+function getCoreCenter(){
+  const r = document.getElementById("core").getBoundingClientRect();
+  return { cx: r.left + r.width/2, cy: r.top + r.height/2 };
+}
+
+let mouse = {x: window.innerWidth/2, y: window.innerHeight/2};
+window.addEventListener('mousemove', e=>{
+  mouse.x = e.clientX;
+  mouse.y = e.clientY;
+});
+
+/* animation loop */
+function tick(){
+  const {cx, cy} = getCoreCenter();
+
+  particles.forEach(p=>{
+    // attraction to core (gravity)
+    let dx = cx - p.x;
+    let dy = cy - p.y;
+    let dist = Math.hypot(dx, dy) + 0.001;
+
+    // mild gravity + mouse influence
+    let g = 0.015;
+    p.vx += (dx/dist)*g;
+    p.vy += (dy/dist)*g;
+
+    // mouse swirl (subtle)
+    let mx = mouse.x - p.x;
+    let my = mouse.y - p.y;
+    let md = Math.hypot(mx,my)+0.001;
+    p.vx += (my/md)*0.005; // perpendicular for swirl
+    p.vy -= (mx/md)*0.005;
+
+    // damping
+    p.vx *= 0.985;
+    p.vy *= 0.985;
+
+    p.x += p.vx;
+    p.y += p.vy;
+
+    // keep on screen
+    if(p.x < 0) p.x = window.innerWidth;
+    if(p.x > window.innerWidth) p.x = 0;
+    if(p.y < 0) p.y = window.innerHeight;
+    if(p.y > window.innerHeight) p.y = 0;
+
+    p.el.style.transform = `translate(${p.x}px, ${p.y}px)`;
+  });
+
+  requestAnimationFrame(tick);
+}
+tick();
+
+/* ===== PANEL CONTENT ===== */
 function openPanel(type){
   const core = document.getElementById("core");
   const panel = document.getElementById("panel");
@@ -228,34 +243,24 @@ function openPanel(type){
   warp.classList.add("active");
 
   let html="";
-
   if(type==="info"){
     html = `
       <h2>INFO</h2>
       <p>
-      I am Nitin — someone who doesn’t just interact with systems, but studies them,
-      breaks them down, and rebuilds them with intention.
-
-      I notice details others ignore.
-      I prefer depth over noise.
-      I don’t rush creation — I refine it.
-
-      What you see here is not a finished identity.
-      It’s a system in development.
-      </p>
-    `;
+      I am Nitin — I don’t just use systems, I reshape them.
+      I prefer depth over noise, precision over speed.
+      I observe, refine, and build experiences that feel intentional.
+      This is not a finished identity — it’s a system evolving in real time.
+      </p>`;
   }
-
   if(type==="social"){
     html = `
       <h2>SOCIAL</h2>
       <p>
       +91 7295968932<br><br>
-      Direct. No filters.
-      </p>
-    `;
+      Direct line. No layers.
+      </p>`;
   }
-
   if(type==="og"){
     html = `
       <h2>OG</h2>
@@ -263,16 +268,12 @@ function openPanel(type){
       Developing.<br>
       Testing ideas.<br>
       Building structure.<br><br>
-
-      Not launched.<br>
-      Not polished.<br>
-      Still evolving.
-      </p>
-    `;
+      Not finished.<br>
+      Still forming.
+      </p>`;
   }
 
   document.getElementById("content").innerHTML = html;
-
   setTimeout(()=>panel.classList.add("active"),120);
 }
 
@@ -280,6 +281,13 @@ function closePanel(){
   document.getElementById("panel").classList.remove("active");
   document.getElementById("core").classList.remove("pulse");
   document.getElementById("warp").classList.remove("active");
+}
+
+/* ===== BACK TO INDEX (portal feel) ===== */
+function goBack(){
+  document.body.style.transition = ".5s";
+  document.body.style.opacity = "0";
+  setTimeout(()=>{ window.location.href = "index.html"; }, 500);
 }
 </script>
 
