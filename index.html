@@ -11,42 +11,39 @@
     body {
       margin: 0;
       font-family: 'Poppins', sans-serif;
-      overflow-x: hidden;
-      color: white;
       background: black;
+      color: white;
+      overflow: hidden;
     }
 
-    /* VIDEO BACKGROUND */
+    /* VIDEO */
     video {
       position: fixed;
       width: 100%;
       height: 100%;
       object-fit: cover;
-      z-index: -2;
+      z-index: -3;
     }
 
-    /* DARK OVERLAY (IMPORTANT FIX) */
     .overlay {
       position: fixed;
       width: 100%;
       height: 100%;
-      background: rgba(0,0,0,0.6);
-      z-index: -1;
+      background: rgba(0,0,0,0.7);
+      z-index: -2;
     }
 
-    /* NAVBAR */
+    /* NAV */
     .nav {
       position: fixed;
       top: 20px;
       right: 40px;
       display: flex;
       gap: 25px;
-      font-size: 14px;
     }
 
     .nav a {
-      color: white;
-      text-decoration: none;
+      cursor: pointer;
       opacity: 0.7;
     }
 
@@ -54,33 +51,24 @@
       opacity: 1;
     }
 
-    /* SECTION */
+    /* HERO */
     .section {
       height: 100vh;
       display: flex;
       justify-content: center;
       align-items: center;
       flex-direction: column;
-      text-align: center;
     }
 
     h1 {
-      font-family: 'Orbitron', sans-serif;
+      font-family: 'Orbitron';
       font-size: 3rem;
       letter-spacing: 10px;
-      text-shadow: 0 0 20px rgba(255,255,255,0.2);
     }
 
-    p {
-      opacity: 0.7;
-      letter-spacing: 2px;
-      margin-top: 10px;
-    }
-
-    /* BUTTON */
     .btn {
-      margin-top: 25px;
-      padding: 10px 28px;
+      margin-top: 20px;
+      padding: 10px 25px;
       border: 1px solid white;
       background: transparent;
       color: white;
@@ -94,24 +82,57 @@
       color: black;
     }
 
-    /* 3D EFFECT */
-    .title {
-      transform: perspective(600px) rotateX(10deg);
-    }
-
-    /* SECOND SECTION */
-    .section2 {
-      height: 100vh;
+    /* PANEL */
+    .panel {
+      position: fixed;
+      top: 0;
+      right: 0;
+      width: 100%;
+      height: 100%;
       background: black;
+      transform: scale(0);
+      transform-origin: top right;
+      transition: 0.5s;
       display: flex;
       justify-content: center;
       align-items: center;
-      flex-direction: column;
+      text-align: center;
+      padding: 20px;
     }
 
-    h2 {
-      font-family: 'Orbitron';
-      letter-spacing: 5px;
+    .panel.active {
+      transform: scale(1);
+    }
+
+    .close {
+      position: absolute;
+      top: 20px;
+      left: 30px;
+      cursor: pointer;
+      font-size: 20px;
+    }
+
+    /* SYMBOLS */
+    .symbol {
+      position: absolute;
+      color: white;
+      pointer-events: none;
+      opacity: 0.15;
+    }
+
+    /* TRIANGLES */
+    .triangle {
+      position: absolute;
+      width: 0;
+      height: 0;
+      border-style: solid;
+      opacity: 0.08;
+      animation: floatUp linear infinite;
+    }
+
+    @keyframes floatUp {
+      0% { bottom: -50px; }
+      100% { bottom: 110%; }
     }
 
   </style>
@@ -119,41 +140,123 @@
 
 <body>
 
-<!-- VIDEO -->
 <video autoplay muted loop>
   <source src="bg.mp4" type="video/mp4">
 </video>
 
 <div class="overlay"></div>
 
-<!-- NAV -->
 <div class="nav">
-  <a href="#">About</a>
-  <a href="#">Projects</a>
-  <a href="#">Contact</a>
+  <a onclick="openPanel('about')">About</a>
+  <a onclick="openPanel('projects')">Projects</a>
+  <a onclick="openPanel('contact')">Contact</a>
 </div>
 
-<!-- HERO -->
 <div class="section">
-  <h1 class="title">NEXT5RE</h1>
-  <p>ENTER THE VOID</p>
-
-  <button class="btn" onclick="scrollNext()">ENTER</button>
+  <h1>NEXT5RE</h1>
+  <button class="btn" onclick="enterSite()">ENTER</button>
 </div>
 
-<!-- SECOND SECTION -->
-<div class="section2">
-  <h2>ABOUT ME</h2>
-  <p>I am Nitin aka 7xnemesis 🚀</p>
+<div class="panel" id="panel">
+  <div class="close" onclick="closePanel()">✕</div>
+  <div id="panelContent"></div>
 </div>
 
 <script>
-function scrollNext() {
-  window.scrollTo({
-    top: window.innerHeight,
-    behavior: "smooth"
-  });
+
+// ================= PANEL =================
+function openPanel(type) {
+  let content = "";
+
+  if(type === "about") {
+    content = `<h2>About</h2>
+    <p>I am Nitin, focused on building modern and aesthetic digital experiences.</p>`;
+  }
+
+  if(type === "projects") {
+    content = `<h2>Projects</h2>
+    <p>No projects yet… something big coming 🚀</p>`;
+  }
+
+  if(type === "contact") {
+    content = `<h2>Contact</h2>
+    <p>+91 7295968932</p>`;
+  }
+
+  document.getElementById("panelContent").innerHTML = content;
+  document.getElementById("panel").classList.add("active");
 }
+
+function closePanel() {
+  document.getElementById("panel").classList.remove("active");
+}
+
+
+// ================= TRIANGLES =================
+for(let i=0;i<20;i++){
+  let t=document.createElement("div");
+  t.className="triangle";
+  t.style.left=Math.random()*100+"%";
+  t.style.borderWidth=`0 ${10+Math.random()*25}px ${20+Math.random()*50}px ${10+Math.random()*25}px`;
+  t.style.borderColor="transparent transparent white transparent";
+  t.style.animationDuration=(8+Math.random()*12)+"s";
+  document.body.appendChild(t);
+}
+
+
+// ================= SYMBOLS =================
+const symbols=["<>","//","{}","##","01","++","==","$","@@","**"];
+let symbolElements=[];
+
+for(let i=0;i<30;i++){
+  let s=document.createElement("div");
+  s.className="symbol";
+  s.innerText=symbols[Math.floor(Math.random()*symbols.length)];
+
+  s.style.left=Math.random()*100+"%";
+  s.style.bottom="-20px";
+  s.style.fontSize=(12 + Math.random()*10)+"px";
+  s.style.animationDuration=(6+Math.random()*10)+"s";
+
+  document.body.appendChild(s);
+  symbolElements.push(s);
+}
+
+
+// ================= ENTER ANIMATION =================
+function enterSite() {
+
+  // pull to center
+  symbolElements.forEach(sym => {
+    sym.style.transition="0.6s";
+    sym.style.left="50%";
+    sym.style.bottom="50%";
+    sym.style.transform="translate(-50%,50%) scale(1.5)";
+    sym.style.opacity="1";
+  });
+
+  // explode
+  setTimeout(()=>{
+    symbolElements.forEach(sym=>{
+      let x=(Math.random()-0.5)*800;
+      let y=(Math.random()-0.5)*800;
+      sym.style.transform=`translate(${x}px,${y}px) scale(0.3)`;
+      sym.style.opacity="0";
+    });
+  },600);
+
+  // fade
+  setTimeout(()=>{
+    document.body.style.transition="0.6s";
+    document.body.style.opacity="0";
+  },1100);
+
+  // redirect
+  setTimeout(()=>{
+    window.location.href="about.html";
+  },1600);
+}
+
 </script>
 
 </body>
