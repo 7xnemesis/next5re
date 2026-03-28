@@ -6,27 +6,30 @@
   <style>
     body {
       margin: 0;
+      height: 100vh;
+      background: radial-gradient(circle at center, #7c3aed, black);
       color: white;
+      font-family: 'Poppins', sans-serif;
+      display: flex;
+      justify-content: center;
+      align-items: center;
       text-align: center;
-      font-family: Arial;
-      overflow: hidden;
     }
 
-    /* Background video */
-    video {
-      position: fixed;
-      width: 100%;
-      height: 100%;
-      object-fit: cover;
-      z-index: -1;
-      filter: brightness(40%);
+    .box {
+      background: rgba(0, 0, 0, 0.5);
+      padding: 30px;
+      border-radius: 10px;
+      backdrop-filter: blur(10px);
     }
 
-    .content {
-      position: absolute;
-      top: 50%;
-      left: 50%;
-      transform: translate(-50%, -50%);
+    h1 {
+      font-size: 40px;
+      margin-bottom: 10px;
+    }
+
+    p {
+      opacity: 0.8;
     }
 
     a {
@@ -34,19 +37,18 @@
       text-decoration: none;
       font-size: 18px;
     }
+
+    a:hover {
+      text-shadow: 0 0 10px #7c3aed;
+    }
   </style>
 </head>
 
 <body>
 
-<!-- VIDEO BACKGROUND -->
-<video autoplay muted loop>
-  <source src="bg.mp4" type="video/mp4">
-</video>
-
-<div class="content">
+<div class="box">
   <h1>About Me</h1>
-  <p>I am Nitin (7xnemesis) 🚀</p>
+  <p>I am Nitin aka 7xnemesis 🚀</p>
 
   <p>
     <a href="https://instagram.com/7xnemesis" target="_blank">
