@@ -5,77 +5,34 @@
 
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-  <link href="https://fonts.googleapis.com/css2?family=Poppins&display=swap" rel="stylesheet">
-
   <style>
     body {
       margin: 0;
       height: 100vh;
-      background: radial-gradient(circle at center, #7c3aed, black);
+      background: black;
       color: white;
-      font-family: 'Poppins', sans-serif;
       display: flex;
       justify-content: center;
       align-items: center;
       text-align: center;
+      font-family: Arial;
 
-      opacity: 0;
-      transform: scale(0.9);
-      animation: fadeZoom 0.6s forwards;
+      animation: redFlash 1s;
     }
 
-    @keyframes fadeZoom {
-      to {
-        opacity: 1;
-        transform: scale(1);
-      }
-    }
-
-    .box {
-      background: rgba(0, 0, 0, 0.5);
-      padding: 30px;
-      border-radius: 12px;
-      backdrop-filter: blur(10px);
-      width: 90%;
-      max-width: 400px;
-    }
-
-    h1 {
-      font-size: 2.5rem;
-    }
-
-    p {
-      font-size: 1.2rem;
-      opacity: 0.8;
-    }
-
-    a {
-      color: #7c3aed;
-      text-decoration: none;
-      font-size: 1.2rem;
-    }
-
-    a:hover {
-      text-shadow: 0 0 10px #7c3aed;
+    @keyframes redFlash {
+      0% { background: black; }
+      50% { background: darkred; }
+      100% { background: black; }
     }
   </style>
 </head>
 
 <body>
 
-<div class="box">
+<div>
   <h1>About Me</h1>
-  <p>I am Nitin aka 7xnemesis 🚀</p>
-
-  <p>
-    <a href="https://instagram.com/7xnemesis" target="_blank">
-      @7xnemesis
-    </a>
-  </p>
-
-  <br>
-
-  <a href="index.html">⬅ Back</a>
+  <p>I am Nitin, exploring creativity and building digital experiences 🚀</p>
 </div>
 
 </body>
