@@ -3,8 +3,9 @@
 <head>
   <title>About</title>
 
-  <!-- 📱 IMPORTANT FOR MOBILE -->
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+  <link href="https://fonts.googleapis.com/css2?family=Poppins&display=swap" rel="stylesheet">
 
   <style>
     body {
@@ -18,19 +19,22 @@
       align-items: center;
       text-align: center;
 
-      /* ✨ fade in */
       opacity: 0;
-      animation: fadeIn 1s forwards;
+      transform: scale(0.9);
+      animation: fadeZoom 0.6s forwards;
     }
 
-    @keyframes fadeIn {
-      to { opacity: 1; }
+    @keyframes fadeZoom {
+      to {
+        opacity: 1;
+        transform: scale(1);
+      }
     }
 
     .box {
       background: rgba(0, 0, 0, 0.5);
       padding: 30px;
-      border-radius: 10px;
+      border-radius: 12px;
       backdrop-filter: blur(10px);
       width: 90%;
       max-width: 400px;
@@ -38,7 +42,6 @@
 
     h1 {
       font-size: 2.5rem;
-      margin-bottom: 10px;
     }
 
     p {
