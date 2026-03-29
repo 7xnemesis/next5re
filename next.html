@@ -12,13 +12,22 @@ body{
 background:black;
 color:white;
 height:100vh;
+overflow:hidden;
 display:flex;
 justify-content:center;
 align-items:center;
-overflow:hidden;
+cursor:none;
 }
 
-/* BLACKHOLE CLOSE */
+/* PARTICLES CANVAS */
+canvas{
+position:fixed;
+top:0;
+left:0;
+z-index:-1;
+}
+
+/* BLACKHOLE ENTRY */
 .blackhole{
 position:fixed;
 width:200vw;
@@ -29,12 +38,11 @@ top:50%;
 left:50%;
 transform:translate(-50%,-50%) scale(1);
 animation:collapse 1.2s forwards;
+z-index:5;
 }
 
 @keyframes collapse{
-to{
-transform:translate(-50%,-50%) scale(0);
-}
+to{transform:translate(-50%,-50%) scale(0);}
 }
 
 /* CARD */
@@ -49,11 +57,10 @@ background:rgba(255,255,255,0.05);
 backdrop-filter:blur(20px);
 border:1px solid rgba(255,255,255,0.2);
 text-align:center;
+z-index:2;
 }
 
-@keyframes fade{
-to{opacity:1;}
-}
+@keyframes fade{to{opacity:1;}}
 
 .pfp{
 width:100px;
@@ -68,13 +75,65 @@ padding:10px 20px;
 border-radius:20px;
 background:rgba(255,255,255,0.1);
 cursor:pointer;
+transition:0.3s;
 }
+
+.btn:hover{
+background:rgba(255,255,255,0.3);
+}
+
+/* BACK BUTTON */
+.back{
+position:fixed;
+top:20px;
+left:20px;
+padding:10px 20px;
+border-radius:20px;
+background:rgba(255,255,255,0.05);
+border:1px solid rgba(255,255,255,0.2);
+cursor:pointer;
+z-index:3;
+}
+
+/* CURSOR GLOW */
+.cursor{
+position:fixed;
+width:20px;
+height:20px;
+border-radius:50%;
+background:rgba(255,255,255,0.8);
+pointer-events:none;
+transform:translate(-50%,-50%);
+filter:blur(8px);
+z-index:10;
+}
+
+/* DISTORTION EFFECT */
+body::after{
+content:"";
+position:fixed;
+width:200%;
+height:200%;
+background:radial-gradient(circle at center, transparent 40%, rgba(255,255,255,0.03));
+animation:wave 6s infinite linear;
+z-index:-2;
+}
+
+@keyframes wave{
+0%{transform:rotate(0deg);}
+100%{transform:rotate(360deg);}
+}
+
 </style>
 </head>
 
 <body>
 
+<canvas id="particles"></canvas>
+
 <div class="blackhole"></div>
+
+<div class="back" onclick="goBack()">← Back</div>
 
 <div class="card">
 <img class="pfp" src="eye1.jpeg">
@@ -83,10 +142,77 @@ cursor:pointer;
 <div class="btn" onclick="goYT()">Open Channel</div>
 </div>
 
+<div class="cursor" id="cursor"></div>
+
 <script>
+
+/* BACK BUTTON WITH REVERSE BLACKHOLE */
+function goBack(){
+let bh=document.createElement("div");
+bh.style.position="fixed";
+bh.style.width="20px";
+bh.style.height="20px";
+bh.style.background="black";
+bh.style.borderRadius="50%";
+bh.style.top="50%";
+bh.style.left="50%";
+bh.style.transform="translate(-50%,-50%) scale(0)";
+bh.style.zIndex="100";
+bh.style.transition="1s";
+document.body.appendChild(bh);
+
+setTimeout(()=>{bh.style.width="200vw";bh.style.height="200vh";bh.style.transform="translate(-50%,-50%) scale(1)";},10);
+
+setTimeout(()=>{window.location.href="index.html";},1000);
+}
+
+/* YOUTUBE */
 function goYT(){
 window.open("https://youtube.com/@sxy.nemesis","_blank");
 }
+
+/* CURSOR GLOW */
+const cursor=document.getElementById("cursor");
+document.addEventListener("mousemove",e=>{
+cursor.style.left=e.clientX+"px";
+cursor.style.top=e.clientY+"px";
+});
+
+/* PARTICLES */
+const canvas=document.getElementById("particles");
+const ctx=canvas.getContext("2d");
+
+canvas.width=window.innerWidth;
+canvas.height=window.innerHeight;
+
+let particles=[];
+for(let i=0;i<80;i++){
+particles.push({
+x:Math.random()*canvas.width,
+y:Math.random()*canvas.height,
+vx:(Math.random()-0.5)*1,
+vy:(Math.random()-0.5)*1
+});
+}
+
+function animate(){
+ctx.clearRect(0,0,canvas.width,canvas.height);
+particles.forEach(p=>{
+p.x+=p.vx;
+p.y+=p.vy;
+
+if(p.x<0||p.x>canvas.width)p.vx*=-1;
+if(p.y<0||p.y>canvas.height)p.vy*=-1;
+
+ctx.beginPath();
+ctx.arc(p.x,p.y,2,0,Math.PI*2);
+ctx.fillStyle="white";
+ctx.fill();
+});
+requestAnimationFrame(animate);
+}
+animate();
+
 </script>
 
 </body>
