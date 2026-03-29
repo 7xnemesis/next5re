@@ -6,143 +6,158 @@
 <title>next5re</title>
 
 <style>
-/* RESET */
-* {
-    margin: 0;
-    padding: 0;
-    box-sizing: border-box;
-    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto;
+*{
+margin:0;
+padding:0;
+box-sizing:border-box;
+font-family:-apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
 }
 
-/* BODY */
-body {
-    height: 100vh;
-    background: #ffffff;
-    overflow: hidden;
+body{
+height:100vh;
+background:black;
+overflow:hidden;
+color:white;
 }
 
-/* NAVBAR */
-.nav {
-    position: fixed;
-    top: 0;
-    width: 100%;
-    padding: 20px 40px;
-    display: flex;
-    justify-content: flex-end;
-    gap: 30px;
-    z-index: 10;
+/* BACKGROUND */
+.bg{
+position:fixed;
+width:100%;
+height:100%;
+z-index:-1;
 }
 
-.nav a {
-    text-decoration: none;
-    color: black;
-    font-size: 16px;
-    font-weight: 500;
-    transition: 0.3s;
+.bg img{
+position:absolute;
+width:320px;
+opacity:0.25;
+filter:blur(6px);
 }
 
-.nav a:hover {
-    opacity: 0.6;
+.bg img:nth-child(1){top:10%;left:5%;}
+.bg img:nth-child(2){bottom:5%;right:5%;}
+.bg img:nth-child(3){top:50%;left:40%;}
+.bg img:nth-child(4){top:20%;right:30%;}
+
+/* NAV */
+.nav{
+position:fixed;
+top:20px;
+right:20px;
+padding:12px 25px;
+border-radius:20px;
+display:flex;
+gap:25px;
+
+background:rgba(255,255,255,0.05);
+backdrop-filter:blur(15px);
+border:1px solid rgba(255,255,255,0.2);
+
+box-shadow:0 8px 30px rgba(0,0,0,0.5);
 }
 
-/* LOGO CENTER */
-.main {
-    height: 100vh;
-    display: flex;
-    justify-content: center;
-    align-items: center;
+.nav a{
+color:white;
+text-decoration:none;
+font-size:15px;
+transition:0.3s;
 }
 
-.logo {
-    font-size: 80px;
-    font-weight: 700;
-    letter-spacing: 2px;
+.nav a:hover{
+color:#ff2a2a;
 }
 
-/* BACKGROUND IMAGES */
-.bg img {
-    position: absolute;
-    width: 300px;
-    opacity: 0.1;
-    filter: blur(2px);
+/* LOGO */
+.main{
+height:100vh;
+display:flex;
+justify-content:center;
+align-items:center;
 }
 
-.bg img:nth-child(1) { top: 10%; left: 10%; }
-.bg img:nth-child(2) { bottom: 10%; right: 10%; }
-.bg img:nth-child(3) { top: 60%; left: 40%; }
+.logo{
+font-size:90px;
+font-weight:700;
+letter-spacing:3px;
 
-/* GLASS POPUP */
-.popup {
-    position: fixed;
-    top: 50%;
-    left: 50%;
-    transform: translate(-50%, -50%) scale(0);
-    width: 300px;
-    padding: 25px;
-    border-radius: 20px;
-    background: rgba(255,255,255,0.2);
-    backdrop-filter: blur(15px);
-    box-shadow: 0 8px 30px rgba(0,0,0,0.1);
-    text-align: center;
-    transition: 0.3s;
+background:linear-gradient(90deg,#fff,#ff2a2a);
+-webkit-background-clip:text;
+color:transparent;
+
+text-shadow:0 0 20px rgba(255,0,0,0.5);
 }
 
-.popup.active {
-    transform: translate(-50%, -50%) scale(1);
+/* POPUP */
+.popup{
+position:fixed;
+top:50%;
+left:50%;
+transform:translate(-50%,-50%) scale(0);
+width:300px;
+padding:25px;
+border-radius:20px;
+
+background:rgba(255,255,255,0.05);
+backdrop-filter:blur(20px);
+border:1px solid rgba(255,255,255,0.2);
+
+text-align:center;
+transition:0.3s;
 }
 
-.popup h2 {
-    margin-bottom: 10px;
+.popup.active{
+transform:translate(-50%,-50%) scale(1);
 }
 
-.popup button {
-    margin-top: 15px;
-    padding: 8px 20px;
-    border: none;
-    background: black;
-    color: white;
-    border-radius: 10px;
-    cursor: pointer;
+.popup button{
+margin-top:15px;
+padding:8px 20px;
+border:none;
+background:#ff2a2a;
+color:white;
+border-radius:10px;
+cursor:pointer;
 }
 
 /* OVERLAY */
-.overlay {
-    position: fixed;
-    width: 100%;
-    height: 100%;
-    background: rgba(0,0,0,0.2);
-    backdrop-filter: blur(5px);
-    opacity: 0;
-    pointer-events: none;
-    transition: 0.3s;
+.overlay{
+position:fixed;
+width:100%;
+height:100%;
+background:rgba(0,0,0,0.6);
+backdrop-filter:blur(5px);
+opacity:0;
+pointer-events:none;
+transition:0.3s;
 }
 
-.overlay.active {
-    opacity: 1;
-    pointer-events: all;
+.overlay.active{
+opacity:1;
+pointer-events:all;
 }
-
 </style>
 </head>
 
 <body>
 
+<!-- BACKGROUND IMAGES (DIRECT LINKS) -->
+<div class="bg">
+<img src="https://i.imgur.com/8Qf6P3M.jpg">
+<img src="https://i.imgur.com/JY9l6Yx.jpg">
+<img src="https://i.imgur.com/NpR4Y2F.jpg">
+<img src="https://i.imgur.com/6pW8xXG.jpg">
+</div>
+
 <!-- NAV -->
 <div class="nav">
-    <a href="/about">About</a>
-    <a href="#" onclick="openPopup()">Contact</a>
+<a href="/about">About</a>
+<a href="#" onclick="openPopup()">Contact</a>
 </div>
 
-<!-- BACKGROUND IMAGES -->
-<div class="bg">
-    <img src="https://picsum.photos/300?1">
-    <img src="https://picsum.photos/300?2">
-    <img src="https://picsum.photos/300?3">
-</div>
-
-<!-- MAIN LOGO -->
+<!-- MAIN -->
 <div class="main">
-    <div class="logo">next5re</div>
+<div class="logo">next5re</div>
 </div>
 
 <!-- OVERLAY -->
@@ -150,20 +165,19 @@ body {
 
 <!-- POPUP -->
 <div class="popup" id="popup">
-    <h2>Contact</h2>
-    <p>Email: next5re@gmail.com</p>
-    <button onclick="closePopup()">Close</button>
+<h2>Contact</h2>
+<p>next5re@gmail.com</p>
+<button onclick="closePopup()">Close</button>
 </div>
 
 <script>
-function openPopup() {
-    document.getElementById("popup").classList.add("active");
-    document.getElementById("overlay").classList.add("active");
+function openPopup(){
+document.getElementById("popup").classList.add("active");
+document.getElementById("overlay").classList.add("active");
 }
-
-function closePopup() {
-    document.getElementById("popup").classList.remove("active");
-    document.getElementById("overlay").classList.remove("active");
+function closePopup(){
+document.getElementById("popup").classList.remove("active");
+document.getElementById("overlay").classList.remove("active");
 }
 </script>
 
