@@ -6,12 +6,7 @@
 <title>next5re</title>
 
 <style>
-*{
-margin:0;
-padding:0;
-box-sizing:border-box;
-font-family:-apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
-}
+*{margin:0;padding:0;box-sizing:border-box;font-family:-apple-system,sans-serif;}
 
 body{
 height:100vh;
@@ -21,22 +16,14 @@ overflow:hidden;
 }
 
 /* BACKGROUND */
-.bg{
-position:fixed;
-width:100%;
-height:100%;
-z-index:-1;
-}
-
 .bg img{
 position:absolute;
-width:320px;
-opacity:0.25;
+width:300px;
+opacity:0.2;
 filter:blur(6px);
 }
-
 .bg img:nth-child(1){top:10%;left:5%;}
-.bg img:nth-child(2){bottom:5%;right:5%;}
+.bg img:nth-child(2){bottom:10%;right:5%;}
 .bg img:nth-child(3){top:50%;left:40%;}
 .bg img:nth-child(4){top:20%;right:30%;}
 
@@ -45,22 +32,16 @@ filter:blur(6px);
 position:fixed;
 top:20px;
 right:20px;
-padding:12px 25px;
-border-radius:20px;
 display:flex;
-gap:25px;
-
+gap:20px;
+padding:10px 20px;
+border-radius:20px;
 background:rgba(255,255,255,0.05);
-backdrop-filter:blur(15px);
+backdrop-filter:blur(10px);
 border:1px solid rgba(255,255,255,0.2);
 }
 
-.nav a{
-color:white;
-text-decoration:none;
-font-size:15px;
-cursor:pointer;
-}
+.nav a{cursor:pointer}
 
 /* MAIN */
 .main{
@@ -74,103 +55,58 @@ gap:30px;
 
 .logo{
 font-size:90px;
-font-weight:700;
-letter-spacing:3px;
-
 background:linear-gradient(90deg,#fff,#ff2a2a);
 -webkit-background-clip:text;
 color:transparent;
-
-text-shadow:0 0 20px rgba(255,0,0,0.5);
 }
 
-/* BUTTON */
 .btn{
 padding:12px 30px;
 border-radius:30px;
 background:rgba(255,255,255,0.05);
-backdrop-filter:blur(10px);
 border:1px solid rgba(255,255,255,0.2);
 cursor:pointer;
-transition:0.3s;
 }
 
-.btn:hover{
-background:rgba(255,255,255,0.15);
-}
-
-/* POPUPS */
-.popup{
-position:fixed;
-top:50%;
-left:50%;
-transform:translate(-50%,-50%) scale(0);
-width:300px;
-padding:25px;
-border-radius:20px;
-
-background:rgba(255,255,255,0.05);
-backdrop-filter:blur(20px);
-border:1px solid rgba(255,255,255,0.2);
-
-text-align:center;
-transition:0.3s;
-}
-
-.popup.active{
-transform:translate(-50%,-50%) scale(1);
-}
-
-/* OVERLAY */
-.overlay{
-position:fixed;
-width:100%;
-height:100%;
-background:rgba(0,0,0,0.6);
-backdrop-filter:blur(5px);
-opacity:0;
-pointer-events:none;
-transition:0.3s;
-}
-
-.overlay.active{
-opacity:1;
-pointer-events:all;
-}
-
-/* BLACKHOLE EFFECT */
+/* BLACKHOLE */
 .blackhole{
 position:fixed;
-width:200vw;
-height:200vh;
+width:20px;
+height:20px;
 background:black;
 border-radius:50%;
 top:50%;
 left:50%;
 transform:translate(-50%,-50%) scale(0);
 z-index:100;
-transition:1s;
+transition:1.2s cubic-bezier(.8,0,.2,1);
 }
 
 .blackhole.active{
+width:200vw;
+height:200vh;
 transform:translate(-50%,-50%) scale(1);
 }
 
-@media(max-width:768px){
-.logo{font-size:50px;}
-.bg img{width:200px;}
+/* FADE CONTENT */
+.fade{
+transition:0.5s;
 }
+.fade.hide{
+opacity:0;
+transform:scale(0.9);
+}
+
 </style>
 </head>
 
 <body>
 
-<div class="bg">
+<div class="bg fade" id="content">
 <img src="eye1.jpeg">
 <img src="eye2.jpeg">
 <img src="eye3.jpeg">
 <img src="eye4.jpeg">
-</div>
 
 <div class="nav">
 <a onclick="openAbout()">About</a>
@@ -179,57 +115,26 @@ transform:translate(-50%,-50%) scale(1);
 
 <div class="main">
 <div class="logo">next5re</div>
-
 <div class="btn" onclick="openAbout()">About Me</div>
-
-<div class="btn" onclick="goNext()">Enter Nexus</div>
+<div class="btn" onclick="enterNexus()">Enter Nexus</div>
+</div>
 </div>
 
-<div class="overlay" id="overlay" onclick="closeAll()"></div>
-
-<!-- CONTACT -->
-<div class="popup" id="contact">
-<h2>Contact</h2>
-<p>Email: next5re@gmail.com</p>
-<p>Phone: +91 7295968932</p>
-<button onclick="closeAll()">Close</button>
-</div>
-
-<!-- ABOUT -->
-<div class="popup" id="about">
-<h2>About Me</h2>
-<p>Welcome to next5re — a futuristic space where design meets imagination.</p>
-<button onclick="closeAll()">Close</button>
-</div>
-
-<!-- BLACKHOLE -->
-<div class="blackhole" id="blackhole"></div>
+<div class="blackhole" id="bh"></div>
 
 <script>
-function openContact(){
-document.getElementById("contact").classList.add("active");
-document.getElementById("overlay").classList.add("active");
-}
-
-function openAbout(){
-document.getElementById("about").classList.add("active");
-document.getElementById("overlay").classList.add("active");
-}
-
-function closeAll(){
-document.getElementById("contact").classList.remove("active");
-document.getElementById("about").classList.remove("active");
-document.getElementById("overlay").classList.remove("active");
-}
-
-function goNext(){
-let bh = document.getElementById("blackhole");
+function enterNexus(){
+document.getElementById("content").classList.add("hide");
+let bh=document.getElementById("bh");
 bh.classList.add("active");
 
 setTimeout(()=>{
 window.location.href="next.html";
-},1000);
+},1100);
 }
+
+function openAbout(){alert("About coming soon");}
+function openContact(){alert("Contact popup here");}
 </script>
 
 </body>
