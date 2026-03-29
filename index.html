@@ -16,8 +16,8 @@ font-family:-apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
 body{
 height:100vh;
 background:black;
-overflow:hidden;
 color:white;
+overflow:hidden;
 }
 
 /* BACKGROUND */
@@ -35,12 +35,13 @@ opacity:0.25;
 filter:blur(6px);
 }
 
+/* positions */
 .bg img:nth-child(1){top:10%;left:5%;}
 .bg img:nth-child(2){bottom:5%;right:5%;}
 .bg img:nth-child(3){top:50%;left:40%;}
 .bg img:nth-child(4){top:20%;right:30%;}
 
-/* NAV */
+/* NAVBAR */
 .nav{
 position:fixed;
 top:20px;
@@ -68,7 +69,7 @@ transition:0.3s;
 color:#ff2a2a;
 }
 
-/* LOGO */
+/* MAIN */
 .main{
 height:100vh;
 display:flex;
@@ -136,22 +137,32 @@ transition:0.3s;
 opacity:1;
 pointer-events:all;
 }
+
+/* MOBILE FIX */
+@media(max-width:768px){
+.logo{
+font-size:50px;
+}
+.bg img{
+width:200px;
+}
+}
 </style>
 </head>
 
 <body>
 
-<!-- BACKGROUND IMAGES (DIRECT LINKS) -->
+<!-- BACKGROUND IMAGES -->
 <div class="bg">
-<img src="https://i.imgur.com/8Qf6P3M.jpg">
-<img src="https://i.imgur.com/JY9l6Yx.jpg">
-<img src="https://i.imgur.com/NpR4Y2F.jpg">
-<img src="https://i.imgur.com/6pW8xXG.jpg">
+<img src="eye1.jpeg">
+<img src="eye2.jpeg">
+<img src="eye3.jpeg">
+<img src="eye4.jpeg">
 </div>
 
 <!-- NAV -->
 <div class="nav">
-<a href="/about">About</a>
+<a href="about.html">About</a>
 <a href="#" onclick="openPopup()">Contact</a>
 </div>
 
@@ -175,6 +186,7 @@ function openPopup(){
 document.getElementById("popup").classList.add("active");
 document.getElementById("overlay").classList.add("active");
 }
+
 function closePopup(){
 document.getElementById("popup").classList.remove("active");
 document.getElementById("overlay").classList.remove("active");
