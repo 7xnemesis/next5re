@@ -1,167 +1,170 @@
 <!DOCTYPE html>
-<html>
+<html lang="en">
 <head>
-  <title>next5re</title>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>next5re</title>
 
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+<style>
+/* RESET */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto;
+}
 
-  <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@600&family=Poppins:wght@300;500&display=swap" rel="stylesheet">
+/* BODY */
+body {
+    height: 100vh;
+    background: #ffffff;
+    overflow: hidden;
+}
 
-  <style>
-    body {
-      margin: 0;
-      background: black;
-      color: white;
-      font-family: 'Poppins', sans-serif;
-      overflow: hidden;
-    }
+/* NAVBAR */
+.nav {
+    position: fixed;
+    top: 0;
+    width: 100%;
+    padding: 20px 40px;
+    display: flex;
+    justify-content: flex-end;
+    gap: 30px;
+    z-index: 10;
+}
 
-    video {
-      position: fixed;
-      width: 100%;
-      height: 100%;
-      object-fit: cover;
-      z-index: -3;
-    }
+.nav a {
+    text-decoration: none;
+    color: black;
+    font-size: 16px;
+    font-weight: 500;
+    transition: 0.3s;
+}
 
-    .overlay {
-      position: fixed;
-      width: 100%;
-      height: 100%;
-      background: radial-gradient(circle, rgba(0,0,0,0.4), black);
-      z-index: -2;
-    }
+.nav a:hover {
+    opacity: 0.6;
+}
 
-    /* CENTER CORE */
-    .core {
-      position: absolute;
-      top: 50%;
-      left: 50%;
-      width: 120px;
-      height: 120px;
-      transform: translate(-50%, -50%);
-      border-radius: 50%;
-      background: radial-gradient(circle, #7c3aed, transparent);
-      filter: blur(30px);
-      opacity: 0.6;
-    }
+/* LOGO CENTER */
+.main {
+    height: 100vh;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
 
-    /* TITLE */
-    .title {
-      position: absolute;
-      top: 50%;
-      left: 50%;
-      transform: translate(-50%, -50%);
-      text-align: center;
-    }
+.logo {
+    font-size: 80px;
+    font-weight: 700;
+    letter-spacing: 2px;
+}
 
-    h1 {
-      font-family: 'Orbitron';
-      letter-spacing: 12px;
-      font-size: 2.5rem;
-    }
+/* BACKGROUND IMAGES */
+.bg img {
+    position: absolute;
+    width: 300px;
+    opacity: 0.1;
+    filter: blur(2px);
+}
 
-    .enter {
-      margin-top: 20px;
-      font-size: 12px;
-      letter-spacing: 3px;
-      opacity: 0.6;
-      cursor: pointer;
-    }
+.bg img:nth-child(1) { top: 10%; left: 10%; }
+.bg img:nth-child(2) { bottom: 10%; right: 10%; }
+.bg img:nth-child(3) { top: 60%; left: 40%; }
 
-    .enter:hover {
-      opacity: 1;
-    }
+/* GLASS POPUP */
+.popup {
+    position: fixed;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%) scale(0);
+    width: 300px;
+    padding: 25px;
+    border-radius: 20px;
+    background: rgba(255,255,255,0.2);
+    backdrop-filter: blur(15px);
+    box-shadow: 0 8px 30px rgba(0,0,0,0.1);
+    text-align: center;
+    transition: 0.3s;
+}
 
-    /* SYMBOL */
-    .symbol {
-      position: absolute;
-      color: white;
-      opacity: 0.12;
-      font-size: 14px;
-      pointer-events: none;
-      transition: 0.5s;
-    }
+.popup.active {
+    transform: translate(-50%, -50%) scale(1);
+}
 
-  </style>
+.popup h2 {
+    margin-bottom: 10px;
+}
+
+.popup button {
+    margin-top: 15px;
+    padding: 8px 20px;
+    border: none;
+    background: black;
+    color: white;
+    border-radius: 10px;
+    cursor: pointer;
+}
+
+/* OVERLAY */
+.overlay {
+    position: fixed;
+    width: 100%;
+    height: 100%;
+    background: rgba(0,0,0,0.2);
+    backdrop-filter: blur(5px);
+    opacity: 0;
+    pointer-events: none;
+    transition: 0.3s;
+}
+
+.overlay.active {
+    opacity: 1;
+    pointer-events: all;
+}
+
+</style>
 </head>
 
 <body>
 
-<video autoplay muted loop>
-  <source src="bg.mp4" type="video/mp4">
-</video>
+<!-- NAV -->
+<div class="nav">
+    <a href="/about">About</a>
+    <a href="#" onclick="openPopup()">Contact</a>
+</div>
 
-<div class="overlay"></div>
+<!-- BACKGROUND IMAGES -->
+<div class="bg">
+    <img src="https://picsum.photos/300?1">
+    <img src="https://picsum.photos/300?2">
+    <img src="https://picsum.photos/300?3">
+</div>
 
-<div class="core" id="core"></div>
+<!-- MAIN LOGO -->
+<div class="main">
+    <div class="logo">next5re</div>
+</div>
 
-<div class="title">
-  <h1>NEXT5RE</h1>
-  <div class="enter" onclick="activate()">INITIATE</div>
+<!-- OVERLAY -->
+<div class="overlay" id="overlay" onclick="closePopup()"></div>
+
+<!-- POPUP -->
+<div class="popup" id="popup">
+    <h2>Contact</h2>
+    <p>Email: next5re@gmail.com</p>
+    <button onclick="closePopup()">Close</button>
 </div>
 
 <script>
-
-// SYMBOL FIELD (spread properly)
-const symbols = ["<>","//","{}","##","01","++","==","$","@@","**"];
-let elements = [];
-
-for(let i=0;i<40;i++){
-  let s=document.createElement("div");
-  s.className="symbol";
-  s.innerText=symbols[Math.floor(Math.random()*symbols.length)];
-
-  s.style.left=Math.random()*100+"%";
-  s.style.top=Math.random()*100+"%";
-  s.style.fontSize=(10 + Math.random()*12)+"px";
-
-  document.body.appendChild(s);
-  elements.push(s);
+function openPopup() {
+    document.getElementById("popup").classList.add("active");
+    document.getElementById("overlay").classList.add("active");
 }
 
-
-// LEGENDARY TRANSITION
-function activate(){
-
-  // STEP 1: orbit pull
-  elements.forEach((el,i)=>{
-    let angle = (i / elements.length) * Math.PI * 2;
-    let radius = 80;
-
-    let x = Math.cos(angle) * radius;
-    let y = Math.sin(angle) * radius;
-
-    el.style.left = "50%";
-    el.style.top = "50%";
-    el.style.transform = `translate(${x}px, ${y}px)`;
-    el.style.opacity = "0.8";
-  });
-
-  // STEP 2: collapse into core
-  setTimeout(()=>{
-    elements.forEach(el=>{
-      el.style.transform = "translate(0,0) scale(0.5)";
-      el.style.opacity = "0.3";
-    });
-
-    document.getElementById("core").style.transform = "translate(-50%, -50%) scale(2)";
-    document.getElementById("core").style.opacity = "1";
-  },600);
-
-  // STEP 3: pulse + blackout
-  setTimeout(()=>{
-    document.body.style.transition="0.6s";
-    document.body.style.background="black";
-    document.body.style.opacity="0";
-  },1200);
-
-  // STEP 4: enter next world
-  setTimeout(()=>{
-    window.location.href="about.html";
-  },1800);
+function closePopup() {
+    document.getElementById("popup").classList.remove("active");
+    document.getElementById("overlay").classList.remove("active");
 }
-
 </script>
 
 </body>
