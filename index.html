@@ -39,6 +39,7 @@ border-radius:20px;
 background:rgba(255,255,255,0.05);
 backdrop-filter:blur(10px);
 border:1px solid rgba(255,255,255,0.2);
+z-index:10;
 }
 
 .nav a{cursor:pointer}
@@ -54,18 +55,56 @@ gap:30px;
 }
 
 .logo{
-font-size:90px;
+font-size:80px;
 background:linear-gradient(90deg,#fff,#ff2a2a);
 -webkit-background-clip:text;
 color:transparent;
 }
 
+/* BUTTON */
 .btn{
 padding:12px 30px;
 border-radius:30px;
 background:rgba(255,255,255,0.05);
 border:1px solid rgba(255,255,255,0.2);
 cursor:pointer;
+}
+
+/* POPUPS */
+.popup{
+position:fixed;
+top:50%;
+left:50%;
+transform:translate(-50%,-50%) scale(0);
+padding:25px;
+border-radius:20px;
+background:rgba(255,255,255,0.05);
+backdrop-filter:blur(20px);
+border:1px solid rgba(255,255,255,0.2);
+text-align:center;
+transition:0.3s;
+z-index:20;
+}
+
+.popup.active{
+transform:translate(-50%,-50%) scale(1);
+}
+
+/* OVERLAY */
+.overlay{
+position:fixed;
+width:100%;
+height:100%;
+background:rgba(0,0,0,0.6);
+opacity:0;
+pointer-events:none;
+transition:0.3s;
+z-index:15;
+}
+
+.overlay.active{
+opacity:1;
+pointer-events:all;
 }
 
 /* BLACKHOLE */
@@ -79,7 +118,8 @@ top:50%;
 left:50%;
 transform:translate(-50%,-50%) scale(0);
 z-index:100;
-transition:1.2s cubic-bezier(.8,0,.2,1);
+transition:1s;
+pointer-events:none;
 }
 
 .blackhole.active{
@@ -87,26 +127,17 @@ width:200vw;
 height:200vh;
 transform:translate(-50%,-50%) scale(1);
 }
-
-/* FADE CONTENT */
-.fade{
-transition:0.5s;
-}
-.fade.hide{
-opacity:0;
-transform:scale(0.9);
-}
-
 </style>
 </head>
 
 <body>
 
-<div class="bg fade" id="content">
+<div class="bg">
 <img src="eye1.jpeg">
 <img src="eye2.jpeg">
 <img src="eye3.jpeg">
 <img src="eye4.jpeg">
+</div>
 
 <div class="nav">
 <a onclick="openAbout()">About</a>
@@ -115,26 +146,54 @@ transform:scale(0.9);
 
 <div class="main">
 <div class="logo">next5re</div>
-<div class="btn" onclick="openAbout()">About Me</div>
 <div class="btn" onclick="enterNexus()">Enter Nexus</div>
 </div>
+
+<!-- OVERLAY -->
+<div class="overlay" id="overlay" onclick="closeAll()"></div>
+
+<!-- ABOUT -->
+<div class="popup" id="about">
+<h2>About Me</h2>
+<p>Welcome to next5re — futuristic creative space.</p>
+<button onclick="closeAll()">Close</button>
+</div>
+
+<!-- CONTACT -->
+<div class="popup" id="contact">
+<h2>Contact</h2>
+<p>Email: next5re@gmail.com</p>
+<p>Phone: +91 7295968932</p>
+<button onclick="closeAll()">Close</button>
 </div>
 
 <div class="blackhole" id="bh"></div>
 
 <script>
+function openAbout(){
+document.getElementById("about").classList.add("active");
+document.getElementById("overlay").classList.add("active");
+}
+
+function openContact(){
+document.getElementById("contact").classList.add("active");
+document.getElementById("overlay").classList.add("active");
+}
+
+function closeAll(){
+document.getElementById("about").classList.remove("active");
+document.getElementById("contact").classList.remove("active");
+document.getElementById("overlay").classList.remove("active");
+}
+
 function enterNexus(){
-document.getElementById("content").classList.add("hide");
 let bh=document.getElementById("bh");
 bh.classList.add("active");
 
 setTimeout(()=>{
 window.location.href="next.html";
-},1100);
+},1000);
 }
-
-function openAbout(){alert("About coming soon");}
-function openContact(){alert("Contact popup here");}
 </script>
 
 </body>
